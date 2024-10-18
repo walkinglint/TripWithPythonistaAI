@@ -90,9 +90,13 @@ def init_pn():
 
 class MyScene(Scene):
     def setup(self):
-        background('black')
+        self.set_background()
         init_pn()
         self.init()
+    
+    def set_background(self):
+        background(0, 0, 0)  # 背景を黒に設定
+    
     def init(self):
         global circles
         global clss 
@@ -107,16 +111,19 @@ class MyScene(Scene):
                 elidx = 0
                 init_pn()
             clss.append(Circles(1, Point(0, 0), randrange(3, 20), randrange(2, 500), randrange(50, 300), nl[elidx], uniform(-1, 1) / 15, uniform(0, 2 * pi), uniform(-1, 1) / 30, uniform(0, 2 * pi), uniform(-1, 1) / 30))
+    
     def update(self):
         global cn
         cn += 1
         if cn % 40 == 0:
             self.init()
+        self.set_background()  # 毎フレーム背景を黒に設定
         translate(int(self.size.w // 2), int(self.size.h // 2))
         for cls in clss:
             cls.update()
         for c in circles:
             c.draw()
+    
     def touch_began(self, touch):
         self.init()
 
